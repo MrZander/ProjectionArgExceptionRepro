@@ -121,7 +121,7 @@ public class Program
                     Type = new DtoEntityType()
                     {
                         ID = f.Type.ID,
-                        Tags = f.Tags.Select(t => new DtoTag() { ID = t.ID })
+                        Tags = f.Type.Tags.Select(t => new DtoTag() { ID = t.ID })
                     }
                 })
                 .Select(f => new FinalResult
