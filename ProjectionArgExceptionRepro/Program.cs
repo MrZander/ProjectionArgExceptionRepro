@@ -112,6 +112,25 @@ public class Program
                 .Single();
             Console.WriteLine(test.Value);
 
+            //Works
+            var test3 = context.Entities
+                .Select(f => new DtoEntity()
+                {
+                    ID = f.ID,
+                    Tags = f.Tags.Select(t => new DtoTag() { ID = t.ID }),
+                    Type = new DtoEntityType()
+                    {
+                        ID = f.Type.ID,
+                        Tags = f.Tags.Select(t => new DtoTag() { ID = t.ID })
+                    }
+                })
+                .Select(f => new FinalResult
+                {
+                    Value = f.Type.Tags.Count()
+                })
+                .Single();
+            Console.WriteLine(test3.Value);
+
             //Exception
             var test2 = context.Entities
                 .ProjectTo<DtoEntity>(cfg)
@@ -120,7 +139,6 @@ public class Program
                     Value = f.Type.Tags.Count()
                 })
                 .Single();
-            Console.WriteLine(test2.Value);
 
         }
     }
